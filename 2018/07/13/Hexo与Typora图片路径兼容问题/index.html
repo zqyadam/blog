@@ -117,7 +117,7 @@
 <meta property="og:description" content="Hexo与Typora图片路径兼容问题背景 Hexo是个很强大的静态博客系统。  Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。   在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在_config.yml中设置post_asset_folder实现资源的管理。将post_asset_folder设置为true">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.zozo.site/2018/07/13/Hexo与Typora图片路径兼容问题/Hexo与Typora图片路径兼容问题.assets/1531483106801.png">
-<meta property="og:updated_time" content="2018-07-13T14:02:10.190Z">
+<meta property="og:updated_time" content="2018-07-13T14:27:50.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo与Typora图片路径兼容问题">
 <meta name="twitter:description" content="Hexo与Typora图片路径兼容问题背景 Hexo是个很强大的静态博客系统。  Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。   在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在_config.yml中设置post_asset_folder实现资源的管理。将post_asset_folder设置为true">
@@ -238,9 +238,9 @@
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
   </li>
 
       
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：22:02:10" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
+              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：22:27:50" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
             
 
             
@@ -404,7 +404,7 @@
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>将Typora在<code>source/_post</code>下生成的带有<code>.assets</code>后缀的文件夹，在<code>hexo generate</code>时，复制到<code>public</code>文件夹下。</p>
 <h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>写个小插件，在Hexo中有两种插件形态，一种是在scripts文件夹下写脚本，另一种是在<code>node_modules</code>文件夹中写Package。</p>
 <p>这里所采用的是第一种方式。初始状态下，在博客的根目录下是没有<code>scripts</code>文件夹的，所以需要我们手动建立。然后新建一个名称为<code>typora-image-copy.js</code>的js文件，并在里面填入下列代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hexo = hexo != <span class="literal">undefined</span> ? hexo : &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"hexo-fs"</span>);</span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line">hexo.extend.filter.register(<span class="string">"after_post_render"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// _post目录路径</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_dir = path.dirname(data.asset_dir);</span><br><span class="line">  <span class="comment">// typora生成的资源目录名称 &lt;title&gt;.assets</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_basename = data.slug + <span class="string">".assets"</span>;</span><br><span class="line">  <span class="comment">// 源资源目录</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_path = path.join(source_asset_dir, source_asset_basename);</span><br><span class="line">  <span class="comment">// 目标资源目录</span></span><br><span class="line">  <span class="keyword">let</span> target_asset_path = path.join(</span><br><span class="line">    hexo.public_dir,</span><br><span class="line">    data.path,</span><br><span class="line">    source_asset_basename</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 拷贝</span></span><br><span class="line">  <span class="keyword">if</span> (fs.existsSync(source_asset_path)) &#123;</span><br><span class="line">    fs.copyDir(source_asset_path, target_asset_path);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hexo = hexo != <span class="literal">undefined</span> ? hexo : &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"hexo-fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line">hexo.extend.filter.register(<span class="string">"after_post_render"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (data.type === <span class="string">'categories'</span> || data.type === <span class="string">'tags'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// _post目录路径</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_dir = path.dirname(data.asset_dir);</span><br><span class="line">  <span class="comment">// typora生成的资源目录名称 &lt;title&gt;.assets</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_basename = data.slug + <span class="string">".assets"</span>;</span><br><span class="line">  <span class="comment">// 源资源目录</span></span><br><span class="line">  <span class="keyword">let</span> source_asset_path = path.join(source_asset_dir, source_asset_basename);</span><br><span class="line">  <span class="comment">// 目标资源目录</span></span><br><span class="line">  <span class="keyword">let</span> target_asset_path = path.join(</span><br><span class="line">    hexo.public_dir,</span><br><span class="line">    data.path,</span><br><span class="line">    source_asset_basename</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 拷贝</span></span><br><span class="line">  <span class="keyword">if</span> (fs.existsSync(source_asset_path)) &#123;</span><br><span class="line">    fs.copyDir(source_asset_path, target_asset_path);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>这里是在文章渲染完成时实现资源文件的复制，复制文件夹及其下的文件时，使用的是<a href="https://github.com/hexojs/hexo-fs" target="_blank" rel="noopener">hexo-fs</a>中的函数。</p>
 
       
@@ -437,6 +437,22 @@
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/13/Going deeper with convolutions/" rel="next" title="Going deeper with convolutions">
+                <i class="fa fa-chevron-left"></i> Going deeper with convolutions
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
@@ -505,9 +521,9 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -517,14 +533,16 @@
                 
                 
                 <div class="site-state-item site-state-categories">
-                  
+                  <a href="/categories/index.html">
                     
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
-                  
+                  </a>
                 </div>
               
 
@@ -532,7 +550,7 @@
                 
                 
                 <div class="site-state-item site-state-tags">
-                  
+                  <a href="/tags/index.html">
                     
                     
                       
@@ -543,13 +561,9 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
-                  
+                  </a>
                 </div>
               
             </nav>
