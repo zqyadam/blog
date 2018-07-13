@@ -86,7 +86,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '6.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -178,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <div class="container sidebar-position-right 
   page-home">
     <div class="headband"></div>
 
@@ -219,6 +219,14 @@
           <li class="menu-item menu-item-home menu-item-active">
     <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
         
         
@@ -323,7 +331,7 @@
                 
               
 
-              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：21:50:42" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
+              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：21:55:13" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
             
 
             
@@ -362,15 +370,13 @@
 
       
         
-          
-          Hexo与Typora图片路径兼容问题背景
-Hexo是个很强大的静态博客系统。
-
-Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。
-
-
-在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在_config.yml中设置
-          ...
+          <h1 id="Hexo与Typora图片路径兼容问题"><a href="#Hexo与Typora图片路径兼容问题" class="headerlink" title="Hexo与Typora图片路径兼容问题"></a>Hexo与Typora图片路径兼容问题</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol>
+<li><p>Hexo是个很强大的静态博客系统。</p>
+</li>
+<li><p>Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。</p>
+</li>
+</ol>
+<p>在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在<code>_config.yml</code>中设置<code>post_asset_folder</code>实现资源的管理。将<code>post_asset_folder</code>设置为true后，在使用<code>hexo new &lt;title&gt;</code>命令时，会在<code>source/_post/</code>文件夹下建立与<code>&lt;title&gt;</code>相同名称的文件夹，可以将图片等资源放置在这个文件夹中。Hexo在<code>hexo generate</code>过程中会生成相应的链接。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/13/Hexo与Typora图片路径兼容问题/#more" rel="contents">

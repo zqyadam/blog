@@ -86,7 +86,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '6.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -116,12 +116,12 @@
 <meta property="og:site_name" content="zozo">
 <meta property="og:description" content="Hexo与Typora图片路径兼容问题背景 Hexo是个很强大的静态博客系统。  Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。   在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在_config.yml中设置post_asset_folder实现资源的管理。将post_asset_folder设置为true">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.zozo.site/2018/07/13/Hexo与Typora图片路径兼容问题/Hexo与Typora图片兼容问题.assets/1531483106801.png">
-<meta property="og:updated_time" content="2018-07-13T13:50:42.784Z">
+<meta property="og:image" content="http://blog.zozo.site/2018/07/13/Hexo与Typora图片路径兼容问题/Hexo与Typora图片路径兼容问题.assets/1531483106801.png">
+<meta property="og:updated_time" content="2018-07-13T13:55:13.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo与Typora图片路径兼容问题">
 <meta name="twitter:description" content="Hexo与Typora图片路径兼容问题背景 Hexo是个很强大的静态博客系统。  Typora是个很好的Markdown编辑器，支持图片粘贴、拖拽。   在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在_config.yml中设置post_asset_folder实现资源的管理。将post_asset_folder设置为true">
-<meta name="twitter:image" content="http://blog.zozo.site/2018/07/13/Hexo与Typora图片路径兼容问题/Hexo与Typora图片兼容问题.assets/1531483106801.png">
+<meta name="twitter:image" content="http://blog.zozo.site/2018/07/13/Hexo与Typora图片路径兼容问题/Hexo与Typora图片路径兼容问题.assets/1531483106801.png">
 
 
 
@@ -185,7 +185,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -225,6 +225,14 @@
           <li class="menu-item menu-item-home">
     <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
         
         
@@ -325,7 +333,7 @@
                 
               
 
-              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：21:50:42" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
+              <time title="创建时间：2018-07-13 18:40:23 / 修改时间：21:55:13" itemprop="dateCreated datePublished" datetime="2018-07-13T18:40:23+08:00">2018-07-13</time>
             
 
             
@@ -370,8 +378,9 @@
 </li>
 </ol>
 <p>在使用Hexo建立博客时，使用Typora进行Markdown编写具有良好的用户体验。在图片问题上，Hexo可以通过在<code>_config.yml</code>中设置<code>post_asset_folder</code>实现资源的管理。将<code>post_asset_folder</code>设置为true后，在使用<code>hexo new &lt;title&gt;</code>命令时，会在<code>source/_post/</code>文件夹下建立与<code>&lt;title&gt;</code>相同名称的文件夹，可以将图片等资源放置在这个文件夹中。Hexo在<code>hexo generate</code>过程中会生成相应的链接。</p>
+<a id="more"></a>
 <p>在使用Typora软件时，通过“偏好设置”可以设置图片的插入方式，如下图：</p>
-<p><img src="Hexo与Typora图片兼容问题.assets/1531483106801.png" alt="1531483106801"></p>
+<p><img src="Hexo与Typora图片路径兼容问题.assets/1531483106801.png" alt="1531483106801"></p>
 <p>通过这种设置方式，Typora将会创建<code>${filename}.assets</code>文件夹，并将粘贴的图片放在这里。</p>
 <p>可以看到，Hexo与Typroa对图片的管理方式的差别仅在于文件夹名称的不同。Hexo在<code>hexo generate</code>会生成相应的链接，Hexo所生成的链接是按照Hexo格式生成的，类似<code>&lt;title&gt;/***.jpg</code>，而在Typora中生成的链接是带有.assets后缀的，如：<code>&lt;title&gt;.assets/***.jpg</code>。<strong>这就导致Typora中链接无法在Hexo中直接使用。</strong></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>将Typora在<code>source/_post</code>下生成的带有<code>.assets</code>后缀的文件夹，在<code>hexo generate</code>时，复制到<code>public</code>文件夹下。</p>
